@@ -1,5 +1,4 @@
 // show cart
-
 (function() {
 	const cartInfo = document.getElementById('cart-info');
 	const cart = document.getElementById('cart');
@@ -8,6 +7,41 @@
 		cart.classList.toggle('show-cart');
 	})
 })();
+
+//remove cart
+window.addEventListener('load', removeItem);
+
+//clear cart
+const clearBtn = document.getElementById('clear-cart');
+clearBtn.addEventListener('click', clearCart);
+
+// clear cart
+function clearCart() {
+	const cart = document.getElementById('cart');
+	const cartItems = document.querySelectorAll('.cart-item');
+	cartItems.forEach( function(cartItem) {
+		cart.removeChild(cartItem)
+	});
+	showTotal();
+}
+
+
+// remove item function
+function removeItem(){
+	const trashBtn = document.querySelectorAll('.cart-item-remove');
+	// console.log(trashBtn);
+
+	trashBtn.forEach(function(btn){
+		btn.addEventListener('click', function(event){
+			if (event.target.parentElement.classList.contains('cart-item-remove')){
+				const removeElement = event.target.parentElement.parentElement;
+				const cart = event.target.parentElement.parentElement.parentElement;
+				cart.removeChild(removeElement);
+				showTotal();
+			}
+		})
+	})
+};
 
 // add item to the cart
 (function() {
@@ -39,36 +73,12 @@
 				cart.insertBefore(cartItem, total);
 				// alert('Item added to the cart');
 				showTotal();
+				removeItem();
 
 			}
 		});
 	});
 	
-})();
-
-// remove item
-(function(){
-	const trashBtn = document.querySelectorAll('.cart-item-remove');
-	// console.log(trashBtn);
-
-	trashBtn.forEach(function(btn){
-		btn.addEventListener('click', function(event){
-			if (event.target.parentElement.classList.contains('cart-item-remove')){
-				const removeElement = event.target.parentElement.parentElement;
-				const cart = event.target.parentElement.parentElement.parentElement;
-				cart.removeChild(removeElement);
-				showTotal();
-			}
-		})
-	})
-})();
-
-// clear cart
-(function() {
-	const clearBtn = document.getElementById('clear-cart');
-	clearBtn.addEventListener('click', function(event){
-		console.log('clear');
-	})
 })();
 
 
